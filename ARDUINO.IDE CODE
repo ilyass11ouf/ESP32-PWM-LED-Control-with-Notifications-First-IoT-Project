@@ -1,0 +1,49 @@
+#define BLYNK_TEMPLATE_ID "YOUR_TEMPLATE_ID"
+#define BLYNK_TEMPLATE_NAME "YOUR_TEMPLATE_NAME"
+#define BLYNK_AUTH_TOKEN "ENTER_YOUR_BLYNK_TOKEN_HERE"
+
+#include <WiFi.h>
+#include <BlynkSimpleEsp32.h>
+
+/************ WIFI ************/
+char ssid[] = "ENTER_YOUR_WIFI_SSID";
+char pass[] = "ENTER_YOUR_WIFI_PASSWORD";
+
+/************ LED ************/
+#define LED_PIN 2   // Built-in LED
+
+bool ledState = false; // To avoid repeated notifications
+
+/************ SLIDER : V0 ************/
+BLYNK_WRITE(V0)
+{
+  int value = param.asInt(); // 0 → 255
+  ledcWrite(LED_PIN, value); // Using ESP32 PWM API
+
+  if (value > 0 && !ledState)
+  {
+    Blynk.logEvent("led_on", "💡 LED is ON");
+    ledState = true;
+  }
+  else if (value == 0 && ledState)
+  {
+    Blynk.logEvent("led_off", "🔌 LED is OFF");
+    ledState = false;
+  }
+}
+
+void setup()
+{
+  Serial.begin(115200);
+
+  // PWM setup
+  ledcAttach(LED_PIN, 5000, 8); // pin, freq, resolution
+  ledcWrite(LED_PIN, 0);
+
+  Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
+}
+
+void loop()
+{
+  Blynk.run();
+}
