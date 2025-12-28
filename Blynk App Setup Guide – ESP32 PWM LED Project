@@ -1,0 +1,58 @@
+📱 Blynk App Setup Guide – ESP32 PWM LED Project
+1️⃣ Create a New Project
+
+Open the Blynk app on your phone.
+
+Tap “New Project”.
+
+Board Type: Select ESP32 Dev Board.
+
+Connection Type: WiFi
+
+Click Create.
+
+Auth Token: You’ll get an email with a token → replace ENTER_YOUR_BLYNK_TOKEN_HERE in main.ino.
+
+2️⃣ Add Widgets
+Slider Widget
+
+Tap “+” → Slider
+
+Pin: V0
+
+Range: 0–255
+
+Name: LED Brightness
+
+Mode: Default (Push or Float)
+
+This slider controls the brightness of the LED using PWM.
+
+Notifications
+
+Go to Device Settings → Notifications
+
+Make sure notifications are allowed on your phone
+
+The code will automatically send a notification when the LED turns ON or OFF
+
+3️⃣ Connect to WiFi
+
+Open main.ino in Arduino IDE
+
+Replace placeholders:
+
+char ssid[] = "ENTER_YOUR_WIFI_SSID";
+char pass[] = "ENTER_YOUR_WIFI_PASSWORD";
+#define BLYNK_AUTH_TOKEN "ENTER_YOUR_BLYNK_TOKEN_HERE"
+
+
+Save and upload code to ESP32
+
+4️⃣ Run Your Project
+
+Open Blynk app → Play
+
+Move the slider → LED brightness changes
+
+LED ON/OFF events will trigger notifications on your phone
